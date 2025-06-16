@@ -33,6 +33,9 @@ def rename_images():
 
                 # Rename the file
                 os.rename(old_path, new_path)
+            else:
+                print("This file is not a .png, .jpg, or .jpeg.")
+                break
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")

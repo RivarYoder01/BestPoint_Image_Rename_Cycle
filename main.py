@@ -25,7 +25,7 @@ def rename_images():
         try:
             if filename.lower().endswith((".png", ".jpg", ".jpeg")):
                 # Create the new file name
-                new_name = ("AHHHH" + f"_{i}.png")
+                new_name = ("AHHHHH" + f"_{i}.png")
                 # new_name = (str(current_year) + f"_{i}")
 
                 # Create the full file path

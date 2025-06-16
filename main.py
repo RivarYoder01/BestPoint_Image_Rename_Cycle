@@ -10,18 +10,21 @@ __version__ = '1.0'
 __date__ = '2025.06.16'
 __status__ = 'Development'
 
+from Images import *
 import os
+from PIL import Image
 
 
 def main():
-    img_dir = "BestPoint_Image_Rename_Cycle/Images"
-
     image_list = []
-    for filename in os.listdir(img_dir):
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image_list.append(os.path.join(img_dir, filename))
+    for filename in os.listdir(Images):
+        if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
+            try:
+                img = Image.open(os.path.join(Images, filename))
+                image_list.append(img)
+            except Exception as e:
+                print(f"Error loading image {filename}: {e}")
 
-    print(image_list)
 
 
 if __name__ == "__main__":

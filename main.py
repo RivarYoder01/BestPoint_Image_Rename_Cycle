@@ -21,12 +21,11 @@ def rename_images():
 
     # Iterate over all files in the directory
     for i, filename in enumerate(os.listdir(directory)):
-        # Check if the file is an image
         try:
             if filename.lower().endswith((".png", ".jpg", ".jpeg")):
                 # Create the new file name
-                new_name = ("AHHHHH" + f"_{i}.png")
-                # new_name = (str(current_year) + f"_{i}")
+                # new_name = ("TESTING" + f"_{i}.png")
+                new_name = (str(current_year) + f"_{i}.png")
 
                 # Create the full file path
                 old_path = os.path.join(directory, filename)

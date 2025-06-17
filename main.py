@@ -12,11 +12,28 @@ __status__ = 'Development'
 
 import os, os.path
 from datetime import datetime
-# import tkinter as tk
-# from tkinter import ttk, filedialog
+import shutil
+
+
+def copy_folder():
+    # Specify the path for the new directory
+    source_folder = "./Images"
+    destination_folder = "./Renamed_Images"
+
+    # Create the directory
+    try:
+        shutil.copytree(source_folder, destination_folder)
+    except FileExistsError:
+        print(f"Directory '{destination_folder}' already exists.")
+    except PermissionError:
+        print(f"Permission denied: Unable to create '{destination_folder}'.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return
+
 
 def rename_images():
-    directory = "C:\\Users\\alyss\\PycharmProjects\\BestPoint_Image_Rename_Cycle\\Images"
+    directory = "./Images"
     current_year = datetime.now().year
 
     # Iterate over all files in the directory
@@ -35,15 +52,16 @@ def rename_images():
                 os.rename(old_path, new_path)
             else:
                 print("This file is not a .png, .jpg, or .jpeg.")
-                break
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
         else:
             print("Images Renamed :)")
+        return
 
 
 def main():
+    # copy_folder()
     rename_images()
 
 

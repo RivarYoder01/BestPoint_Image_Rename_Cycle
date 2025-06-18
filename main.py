@@ -35,7 +35,7 @@ def ask_user_file_download(directory_download):
 
 def copy_folder():
     current_datetime = datetime.now()
-    formatted_timestamp = current_datetime.strftime("%Y%m%d_%H%M%S")
+    formatted_timestamp = current_datetime.strftime("%Y-%m-%d_%H%M.%S")
 
     source_folder = "./Images"
     destination_folder = ("./RenamedImages_" + formatted_timestamp)

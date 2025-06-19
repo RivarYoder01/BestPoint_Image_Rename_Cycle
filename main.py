@@ -17,40 +17,28 @@ from tkinter import ttk
 from tkinterdnd2 import DND_FILES, TkinterDnD
 
 
-def user_interface():
-    root = Tk()
-    root.geometry("400x400")
-    root.title("Image Renamer")
+def drag_and_drop_interface():
+    root = TkinterDnD.Tk()
+    root.title("Drag and Drop Image Renamer")
+    root.geometry("400x200")
 
-    label = Label(root, text="Welcome to Image Renamer!", font=("Arial", 16))
+    label = ttk.Label(root, text="Drag and drop a folder containing images here:")
     label.pack(pady=20)
 
-    button = ttk.Button(root, text="Start Renaming Images", command=lambda: [root.destroy(), copy_folder()])
-    button.pack(pady=20)
+    def drop(event):
+        folder_path = event.data
+        if folder_path:
+            copy_folder(folder_path)
+            label.config(text="Images copied and renamed successfully!")
 
-    drag_and_drop_label = Label(root, text="Drag and drop your images into the 'Images' folder.", font=("Arial", 12))
-    drag_and_drop_label.pack(pady=10)
-    drag_lable
-
-    def on_drag_start(event):
-        drag_label.config(bg="yellow")
-        event.widget.start_drag()
-
-    # Drag motion event
-    def on_drag_motion(event):
-        print(f"Dragging: {event.x_root}, {event.y_root}")
-
-    # Drop event
-    def on_drop(event):
-        drop_label.config(text="Dropped", bg="lightcoral")
-        drag_label.config(bg="lightblue")
+    root.drop_target_register(DND_FILES)
+    root.dnd_bind('<<Drop>>', drop)
 
     root.mainloop()
-    copy_folder()
 
 
 def main():
-    user_interface()
+    drag_and_drop_interface()
 
 
 if __name__ == "__main__":

@@ -14,15 +14,22 @@ import os, os.path
 import sys
 from datetime import datetime
 import shutil
+import wget
 
 
 def file_download(directory_download):
     print(directory_download)
+    url = "download"
+    try:
+        wget.download(url, out=directory_download)
+        print(f"\nFile '{directory_download}' downloaded successfully.")
+    except Exception as e:
+        print(f"Error downloading file: {e}")
 
 
 def ask_user_file_download(directory_download):
     download_newfile = input("Do you want to download your renamed images? (y/n)")
-    while download_newfile.isalpha:
+    while True:
         if download_newfile == "y":
             file_download(directory_download)
             sys.exit(0)

@@ -12,6 +12,7 @@ __status__ = 'Development'
 
 import os
 import shutil
+from datetime import datetime
 from copy_images import copy_folder
 from copy_images import file_download
 from tkinter import ttk
@@ -25,6 +26,7 @@ def drag_and_drop_interface():
 
     label = ttk.Label(root, text="Drag and drop a folder containing images here:")
     label.pack(pady=20)
+
 
     def drop(event):
         image_extensions = ('.png', '.jpg', '.jpeg')
@@ -54,10 +56,15 @@ def drag_and_drop_interface():
         else:
             label.config(text="No valid images found.")
 
-    def rename_images_button():
-        button = ttk.Button(root, text="Rename Images", command=copy_folder())
 
+    def rename_images_button():
+        button = ttk.Button(root, text="Rename Images", command=copy_folder)
         button.pack(pady=10)
+
+        current_datetime = datetime.now()
+        formatted_timestamp = current_datetime.strftime("%Y-%m-%d_%H%M.%S")
+        destination_folder = ("./RenamedImages_" + formatted_timestamp)
+
         download_button(destination_folder)
         exit_program_button()
         return[]

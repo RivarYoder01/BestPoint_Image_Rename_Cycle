@@ -24,8 +24,8 @@ def copy_folder():
         print(f"An error occurred: {e}")
         return[]
     else:
+        rename_images(destination_folder)
         return destination_folder
-        # directory_download = rename_images(destination_folder)
         # ask_user_file_download(directory_download)
 
 
@@ -71,14 +71,14 @@ def ask_user_file_download(directory_download):
     """
 
 
-def file_download(directory_download):
+def file_download(destination_folder):
     # Downloads folder to computer on both mac and windows
     if sys.platform.startswith('darwin'):
-        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', directory_download)
+        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', destination_folder)
     elif sys.platform.startswith('win32'):
-        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', directory_download)
+        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', destination_folder)
     else:
-        directory_download = os.path.join(os.getcwd(), directory_download)
+        directory_download = os.path.join(os.getcwd(), destination_folder)
 
     if not os.path.exists(directory_download):
         os.makedirs(directory_download)

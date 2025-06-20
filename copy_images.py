@@ -2,30 +2,6 @@ import os, os.path
 import sys
 from datetime import datetime
 import shutil
-import wget
-
-
-def file_download(directory_download):
-    print(directory_download)
-    url = "download"
-    try:
-        wget.download(url, out=directory_download)
-        print(f"\nFile '{directory_download}' downloaded successfully.")
-    except Exception as e:
-        print(f"Error downloading file: {e}")
-
-
-def ask_user_file_download(directory_download):
-    download_newfile = input("Do you want to download your renamed images? (y/n)")
-    while True:
-        if download_newfile == "y":
-            file_download(directory_download)
-            sys.exit(0)
-        if download_newfile == "n":
-            print("Goodbye.")
-            sys.exit(0)
-        else:
-            download_newfile = input("Please input 'y' or 'n'")
 
 
 def copy_folder():
@@ -40,13 +16,17 @@ def copy_folder():
         shutil.copytree(source_folder, destination_folder)
     except FileExistsError:
         print(f"Directory '{destination_folder}' already exists.")
+        return[]
     except PermissionError:
         print(f"Permission denied: Unable to create '{destination_folder}'.")
+        return[]
     except Exception as e:
         print(f"An error occurred: {e}")
+        return[]
     else:
-        directory_download = rename_images(destination_folder)
-        ask_user_file_download(directory_download)
+        return destination_folder
+        # directory_download = rename_images(destination_folder)
+        # ask_user_file_download(directory_download)
 
 
 def rename_images(destination_folder):
@@ -74,3 +54,31 @@ def rename_images(destination_folder):
         else:
             print("Image", filename, "renamed to", new_name)
     return directory
+
+
+"""
+def ask_user_file_download(directory_download):
+    download_newfile = input("Do you want to download your renamed images? (y/n)")
+    while True:
+        if download_newfile == "y":
+            file_download(directory_download)
+            sys.exit(0)
+        if download_newfile == "n":
+            print("Goodbye.")
+            sys.exit(0)
+        else:
+            download_newfile = input("Please input 'y' or 'n'")
+    """
+
+
+def file_download(directory_download):
+    # Downloads folder to computer on both mac and windows
+    if sys.platform.startswith('darwin'):
+        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', directory_download)
+    elif sys.platform.startswith('win32'):
+        directory_download = os.path.join(os.path.expanduser('~'), 'Downloads', directory_download)
+    else:
+        directory_download = os.path.join(os.getcwd(), directory_download)
+
+    if not os.path.exists(directory_download):
+        os.makedirs(directory_download)

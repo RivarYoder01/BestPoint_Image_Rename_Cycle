@@ -12,17 +12,19 @@ __status__ = 'Development'
 
 import os
 import shutil
-from datetime import datetime
 from copy_images import copy_folder
 from copy_images import file_download
+from folder_name import global_variable
 from tkinter import ttk
 from tkinterdnd2 import DND_FILES, TkinterDnD
+
+DESTINATION_FOLDER = global_variable()
 
 
 def drag_and_drop_interface():
     root = TkinterDnD.Tk()
     root.title("Drag and Drop Image Renamer")
-    root.geometry("400x200")
+    root.geometry("500x300")
 
     label = ttk.Label(root, text="Drag and drop a folder containing images here:")
     label.pack(pady=20)
@@ -58,20 +60,33 @@ def drag_and_drop_interface():
 
 
     def rename_images_button():
-        button = ttk.Button(root, text="Rename Images", command=copy_folder)
+        button = ttk.Button(root, text="Rename Images", command=rename_images_function)
         button.pack(pady=10)
 
-        current_datetime = datetime.now()
-        formatted_timestamp = current_datetime.strftime("%Y-%m-%d_%H%M.%S")
-        destination_folder = ("./RenamedImages_" + formatted_timestamp)
-
-        download_button(destination_folder)
+    def rename_images_function():
+        try:
+            copy_folder()
+        except Exception as e:
+            label.config(text=f"Error renaming images: {e}")
+            return
+        else:
+            label.config(text=f"Images renamed and copied to: {DESTINATION_FOLDER}")
+        download_button()
         exit_program_button()
-        return[]
 
-    def download_button(destination_folder):
-        button = ttk.Button(root, text="Download Renamed Images", command=file_download(destination_folder))
+    def download_button():
+        button = ttk.Button(root, text="Download Renamed Images", command=download_function)
         button.pack(pady=10)
+
+    def download_function():
+        try:
+            file_download()
+        except Exception as e:
+            label.config(text=f"Error downloading images: {e}")
+            return
+        else:
+            label.config(text=f"Renamed images downloaded to downloads")
+
 
     def exit_program_button():
         button = ttk.Button(root, text="Exit", command=root.quit)
